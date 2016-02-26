@@ -21,7 +21,7 @@ void ofxFilterbank::setup(int iBufferSize, int iMidiMin, int iMidiMax, int iChan
     smoothAmnt = 0.7;
     estimateMax = 0.2;
 
-    treshold = 0.02;
+    threshold = 0.01;
     showAll = true;
 
     left.assign(bufferSize, 0.0);
@@ -91,7 +91,7 @@ void ofxFilterbank::analyze(float * iBuffer){
         smth_energies[n] *= smoothAmnt;
         smth_energies[n] += (1-smoothAmnt) * energies[n];
         ///mask
-        if(smth_energies[n]>treshold  && n>midiMinVar+1){
+        if(smth_energies[n]>threshold  && n>midiMinVar+1){
             if (smth_energies[n]>smth_energies[n-1])
                 smth_energies[n-1] -= smth_energies[n]*maskAmnt;
             else
@@ -118,8 +118,9 @@ void ofxFilterbank::exit(){
 //--------------------------------------------------------------
 void ofxFilterbank::draw(int w, int h){
 
-    ofSetColor(255);
-    ofDrawBitmapString("FB Analysis", 4, 18);
+    ofSetColor(0);
+    ofFill();
+//    ofDrawBitmapString("FB Analysis", 4, 18);
     ofRect(0, 0, w, h);
     float step = (float) w / (midiMaxVar - midiMinVar);
     ofSetLineWidth(3);
@@ -127,7 +128,7 @@ void ofxFilterbank::draw(int w, int h){
         log_smth_energies[n] = LIN2dB (smth_energies[n]);
       
        float ener = ofMap (log_smth_energies[n], -45.0, LIN2dB(estimateMax), 0.0, h, true);
-        if(smth_energies[n] > treshold){
+        if(smth_energies[n] > threshold){
             ofSetColor(color);
             ofDrawBitmapString(midiToNote(n), step*(n-midiMinVar), h-ener);
             ofLine(step*(n-midiMinVar), h, step*(n-midiMinVar), h-ener );
@@ -139,11 +140,11 @@ void ofxFilterbank::draw(int w, int h){
     }
 
     ofSetColor(80);
-    float logTresh = LIN2dB(treshold);
-    float tres = ofMap(logTresh, -45.0, LIN2dB(estimateMax), 0.0, h);
+    float logThresh = LIN2dB(threshold);
+    float thres = ofMap(logThresh, -45.0, LIN2dB(estimateMax), 0.0, h);
     ofSetLineWidth(1);
-    ofLine(0,h-tres, w, h-tres);
-    ofDrawBitmapString("Treshold" , w-80, h-tres);
+    ofLine(0,h-thres, w, h-thres);
+//    ofDrawBitmapString("Threshold" , w-198, h-thres-2);
 
 
 

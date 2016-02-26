@@ -6,7 +6,7 @@
 
 
 #include "ofMain.h"
-#define LIN2dB(x) (double)(20. * log10(x))
+#define LIN2dB(x) (double)(12. * log10(x))
 
 extern "C" {
     #include "fb_funcs.h"
@@ -25,6 +25,7 @@ class ofxFilterbank
         void analyze(float * iBuffer);
         string midiToNote (int midi);
         void setColor(ofColor col){color=col;}
+        void setThreshold(float t){ threshold=t;};
     
         float* getEnergies(){return &energies[0];}
         float* getSmthEnergies(){return &smth_energies[0];}
@@ -33,7 +34,7 @@ class ofxFilterbank
         float getPitchDev(){return pitchDev;}
     
 		bool showAll;
-        float smoothAmnt, treshold, estimateMax, maskAmnt, pitchDev, pitchFader;
+        float smoothAmnt, threshold, estimateMax, maskAmnt, pitchDev, pitchFader;
         int midiMin, midiMax, midiMinVar, midiMaxVar;
     
     
