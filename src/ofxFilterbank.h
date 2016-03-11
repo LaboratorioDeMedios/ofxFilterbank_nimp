@@ -6,7 +6,7 @@
 
 
 #include "ofMain.h"
-#define LIN2dB(x) (double)(12. * log10(x))
+#define LIN2dB(x) (double)(15. * log10(x))
 
 extern "C" {
     #include "fb_funcs.h"
