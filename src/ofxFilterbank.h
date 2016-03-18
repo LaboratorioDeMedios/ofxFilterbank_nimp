@@ -6,7 +6,6 @@
 
 
 #include "ofMain.h"
-#define LIN2dB(x) (double)(15. * log10(x))
 
 extern "C" {
     #include "fb_funcs.h"
@@ -24,20 +23,21 @@ class ofxFilterbank
         void setPitchDev();
         void analyze(float * iBuffer);
         string midiToNote (int midi);
-        void setColor(ofColor col){color=col;}
-        void setThreshold(float t){ threshold=t;};
+        void setColor(ofColor col){ color = col;}
+        void setThreshold(float t);
+        void setSoundLevelSaturation(float s);
     
-        float* getEnergies(){return &energies[0];}
-        float* getSmthEnergies(){return &smth_energies[0];}
-        float* getLeftBuffer(){return &left[0];}
-        float* getRightBuffer(){return &right[0];}
-        float getPitchDev(){return pitchDev;}
+        float* getEnergies(){ return &energies[0]; };
+        float* getSmthEnergies(){ return &smth_energies[0]; };
+        float* getLeftBuffer(){ return &left[0]; };
+        float* getRightBuffer(){ return &right[0]; };
+        float  getPitchDev(){ return pitchDev; };
+    
+        double  LIN2dB(float x) { return soundLevelSaturation * log10(x); };
     
 		bool showAll;
-        float smoothAmnt, threshold, estimateMax, maskAmnt, pitchDev, pitchFader;
+        float smoothAmnt, threshold, estimateMax, maskAmnt, pitchDev, pitchFader, soundLevelSaturation;
         int midiMin, midiMax, midiMinVar, midiMaxVar;
-    
-    
 
     protected:
 

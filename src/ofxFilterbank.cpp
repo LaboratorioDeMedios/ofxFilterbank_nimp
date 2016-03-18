@@ -58,6 +58,18 @@ void ofxFilterbank::setPitchDev(){
         }
     }
 }
+
+//--------------------------------------------------------------
+void ofxFilterbank::setThreshold(float t){
+    threshold = t * (soundLevelSaturation/10);
+    estimateMax = pow(10, 0.2/soundLevelSaturation);
+}
+
+//--------------------------------------------------------------
+void ofxFilterbank::setSoundLevelSaturation(float s){
+    soundLevelSaturation = s;
+}
+
 //--------------------------------------------------------------
 void ofxFilterbank::analyze(float * iBuffer){
     //Reset energies
@@ -141,7 +153,7 @@ void ofxFilterbank::draw(int w, int h){
 
     ofSetColor(80);
     float logThresh = LIN2dB(threshold);
-    float thres = ofMap(logThresh, -45.0, LIN2dB(estimateMax), 0.0, h);
+    float thres = ofMap(logThresh, -45.0, LIN2dB(estimateMax), 0.0, h, true);
     ofSetLineWidth(1);
     ofLine(0,h-thres, w, h-thres);
 //    ofDrawBitmapString("Threshold" , w-198, h-thres-2);
