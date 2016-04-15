@@ -135,7 +135,7 @@ void ofxFilterbank::draw(int w, int h){
 //    ofDrawBitmapString("FB Analysis", 4, 18);
     ofRect(0, 0, w, h);
     float step = (float) w / (midiMaxVar - midiMinVar);
-    ofSetLineWidth(3);
+    ofSetLineWidth(1.8);
     for(int n=midiMinVar; n<midiMaxVar; n++){
         log_smth_energies[n] = LIN2dB (smth_energies[n]);
       
@@ -157,9 +157,7 @@ void ofxFilterbank::draw(int w, int h){
     ofSetLineWidth(1);
     ofLine(0,h-thres, w, h-thres);
 //    ofDrawBitmapString("Threshold" , w-198, h-thres-2);
-
-
-
+    
 }
 //--------------------------------------------------------------
 string ofxFilterbank::midiToNote(int midi){
